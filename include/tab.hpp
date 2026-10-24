@@ -16,11 +16,12 @@ class Tab
 {
   public:
     virtual ~Tab() = 0;
-    virtual auto build_tab(QTabWidget *tab_parent) -> void = 0;
+    virtual auto build_tab() -> void = 0;
     virtual auto set_entry() -> void;     // all fields that wait for an input
     virtual auto set_container() -> void; // could`ve a tabBar, Pane, Scroll View
     virtual auto set_button() -> void;    // no need explaination
     virtual auto set_popup() -> void;
+    virtual auto set_binding() -> void; // bind widget with their custom action
 };
 
 class Sell : protected Tab
@@ -30,7 +31,8 @@ class Sell : protected Tab
 
   public:
     explicit Sell(QTabWidget *tab_parent);
+    ~Sell() override;
 
   protected:
-    auto build_tab(QTabWidget *tab_parent) -> void override;
+    auto build_tab() -> void override;
 };

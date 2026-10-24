@@ -3,4 +3,13 @@ name = "pos-rs"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "backend"
+path = "src/backend/lib.rs"
+crate-type = ["staticlib"]
+
 [dependencies]
+cxx = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"

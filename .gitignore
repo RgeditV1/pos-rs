@@ -1,1 +1,13 @@
 /target
+build/
+.cache
+bin/
+*.so
+*.exe
+*.bat
+.vscode
+compile_commands.json
+out
+__pycache__
+.venv
+.env

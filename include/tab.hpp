@@ -16,12 +16,16 @@ class Tab
 {
   public:
     virtual ~Tab() = 0;
+
+  protected:
     virtual auto build_tab() -> void = 0;
+    virtual auto set_layout() -> void = 0;  // Set the layout
+    virtual auto set_binding() -> void = 0; // bind widget with their custom action
+    virtual auto set_button() -> void = 0;  // no need explaination
+
     virtual auto set_entry() -> void;     // all fields that wait for an input
     virtual auto set_container() -> void; // could`ve a tabBar, Pane, Scroll View
-    virtual auto set_button() -> void;    // no need explaination
     virtual auto set_popup() -> void;
-    virtual auto set_binding() -> void; // bind widget with their custom action
 };
 
 class Sell : protected Tab
@@ -35,4 +39,5 @@ class Sell : protected Tab
 
   protected:
     auto build_tab() -> void override;
+    auto set_layout() -> void override;
 };

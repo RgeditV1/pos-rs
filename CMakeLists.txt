@@ -64,7 +64,7 @@ add_dependencies(rust_backend ${RUST_LIB_PATH})
 target_include_directories(pos-rs PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 target_link_libraries(pos-rs PRIVATE
-                      rust_backend
+                      #rust_backend
                       Qt6::Core
                       Qt6::Gui
                       Qt6::Widgets)

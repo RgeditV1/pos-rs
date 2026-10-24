@@ -37,10 +37,12 @@ add_executable(pos-rs ${SOURCES} ${HEADERS} res.qrc)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   set(CARGO_PROFILE "release")
-  set(RUST_LIB_PATH "${CARGO_TARGET_DIR}/release/${RUST_LIB_NAME}.a")
+  set(RUST_LIB_FILE "libbackend.a")
+  set(RUST_LIB_PATH "${CARGO_TARGET_DIR}/release/${RUST_LIB_FILE}")
 else()
   set(CARGO_PROFILE "debug")
-  set(RUST_LIB_PATH "${CARGO_TARGET_DIR}/debug/${RUST_LIB_NAME}.a")
+  set(RUST_LIB_FILE "libbackend.a")
+  set(RUST_LIB_PATH "${CARGO_TARGET_DIR}/debug/${RUST_LIB_FILE}")
 endif()
 
 add_custom_command(
@@ -55,6 +57,8 @@ add_library(rust_backend STATIC IMPORTED)
 set_target_properties(rust_backend PROPERTIES
     IMPORTED_LOCATION ${RUST_LIB_PATH}
 )
+
+add_custom_target(run_cargo_build DEPENDS ${RUST_LIB_PATH})
 add_dependencies(rust_backend ${RUST_LIB_PATH})
 
 target_include_directories(pos-rs PRIVATE ${CMAKE_SOURCE_DIR}/include)

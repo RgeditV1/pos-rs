@@ -1,5 +1,4 @@
 <RCC>
     <qresource prefix="/">
-        <file>res/search.svg</file>
     </qresource>
 </RCC>

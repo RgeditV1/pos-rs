@@ -1,11 +1,11 @@
 #pragma once
 
-class QTabWidget;
-// class QWidget;
+class QFrame;
+#include <QFrame>
 
 /* Tabs class */
 class Tab; // Base Class
-class Sell;
+class Sale;
 class Inventory;
 class Client;
 class Product;
@@ -28,16 +28,15 @@ class Tab
     virtual auto set_popup() -> void;
 };
 
-class Sell : protected Tab
+class Sale : protected Tab, public QFrame
 {
-  private:
-    QTabWidget *parent;
-
   public:
-    explicit Sell(QTabWidget *tab_parent);
-    ~Sell() override;
+    explicit Sale(QFrame *tab_parent);
+    ~Sale() override;
 
   protected:
     auto build_tab() -> void override;
     auto set_layout() -> void override;
+    auto set_binding() -> void override;
+    auto set_button() -> void override;
 };

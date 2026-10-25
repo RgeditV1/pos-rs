@@ -30,7 +30,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 set(CARGO_TARGET_DIR "${CMAKE_CURRENT_SOURCE_DIR}/target")
 set(RUST_LIB_NAME "libbackend")
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/gui/*.cpp")
 file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "include/*.hpp")
 
 add_executable(pos-rs ${SOURCES} ${HEADERS} res.qrc)

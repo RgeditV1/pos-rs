@@ -15,10 +15,6 @@ auto MainWindow::build_window() -> void
     this->setWindowTitle("Punto de Venta");
     this->setFixedSize(QSize(1280, 720));
     build_tab_bar();
-    tab_bar->setDocumentMode(true);
-    tab_bar->tabBar()->setExpanding(true);
-
-    this->setCentralWidget(tab_bar);
 }
 
 auto MainWindow::build_tab_bar() -> void
@@ -28,4 +24,9 @@ auto MainWindow::build_tab_bar() -> void
     {
         tab_bar->addTab(get_tab_info()[i].frame, get_tab_info()[i].icon, get_tab_info()[i].name);
     }
+    tab_bar->setDocumentMode(true);
+    tab_bar->tabBar()->setExpanding(true);
+    tab_bar->setIconSize(QSize(32, 32));
+    tab_bar->setElideMode(Qt::ElideRight); // in case of small screen
+    this->setCentralWidget(tab_bar);
 }

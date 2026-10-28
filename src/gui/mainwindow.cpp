@@ -1,33 +1,41 @@
 #include "mainwindow.hpp"
 
+#include "tab.hpp"
+
 #include <QSize>
 #include <QTabBar>
 
-auto MainWindow::tab_info() -> std::array<TABS, 6>
+auto MainWindow::tab_info() -> std::array<TabInfo, 6>
 {
-    return {TABS{
+    return {TabInfo{
                 .name = QString("Venta"),
                 .icon = QIcon(":res/sale.svg"),
+                .tab = new Sale(nullptr),
             },
-            TABS{
+            TabInfo{
                 .name = QString("Cliente"),
                 .icon = QIcon(":res/client.svg"),
+                .tab = new Client(nullptr),
             },
-            TABS{
+            TabInfo{
                 .name = QString("Inventario"),
                 .icon = QIcon(":res/inventory.svg"),
+                .tab = new Inventory(nullptr),
             },
-            TABS{
+            TabInfo{
                 .name = QString("Producto"),
                 .icon = QIcon(":res/product.svg"),
+                .tab = new Product(nullptr),
             },
-            TABS{
+            TabInfo{
                 .name = QString("Reportes"),
                 .icon = QIcon(":res/report.svg"),
+                .tab = new Report(nullptr),
             },
-            TABS{
+            TabInfo{
                 .name = QString("Configuraciones"),
                 .icon = QIcon(":res/settings.svg"),
+                .tab = new Configuration(nullptr),
             }};
 }
 
@@ -46,14 +54,12 @@ auto MainWindow::build_tab_bar() -> void
 {
     tab_bar = new QTabWidget(this);
 
-    const auto &info_list = tab_info();
-    const size_t TOTAL_TABS = tab_info().size();
+    auto info_list = tab_info();
 
-    for (size_t i = 0; i < TOTAL_TABS; ++i)
+    for (auto &info : info_list)
     {
-
-        QPointer<QFrame> current_frame = new QFrame(tab_bar);
-        tab_bar->addTab(current_frame, info_list[i].icon, info_list[i].name);
+        info.tab->setParent(tab_bar);
+        tab_bar->addTab(info.tab, info.icon, info.name);
     }
 
     tab_bar->setDocumentMode(true);
@@ -62,5 +68,3 @@ auto MainWindow::build_tab_bar() -> void
     tab_bar->setElideMode(Qt::ElideRight); // in case of small screen...
     this->setCentralWidget(tab_bar);
 }
-
-auto MainWindow::set_tab(QFrame *frame) -> void {}

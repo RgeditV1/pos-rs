@@ -2,6 +2,7 @@
 
 #include "tab.hpp"
 
+#include <QFrame>
 #include <QIcon>
 #include <QMainWindow>
 #include <QPointer>
@@ -10,42 +11,20 @@
 #include <QWidget>
 
 #include <array>
+#include <memory>
 
-namespace Conf
+// some widget properties
+namespace Props
 {
     struct TABS
     {
         QString name;
         QIcon icon;
-        QPointer<QFrame> frame;
     };
 
-    [[nodiscard]] inline auto get_tab_info() -> std::array<TABS, 6>
-    {
-        std::array<TABS, 6> tab_info = {
-            TABS{.name = QString("Venta"), .icon = QIcon(":res/sale.svg"), .frame = new QFrame()},
-            TABS{.name = QString("Cliente"),
-                 .icon = QIcon(":res/client.svg"),
-                 .frame = new QFrame()},
-            TABS{.name = QString("Inventario"),
-                 .icon = QIcon(":res/inventory.svg"),
-                 .frame = new QFrame()},
-            TABS{.name = QString("Producto"),
-                 .icon = QIcon(":res/product.svg"),
-                 .frame = new QFrame()},
-            TABS{.name = QString("Reportes"),
-                 .icon = QIcon(":res/report.svg"),
-                 .frame = new QFrame()},
-            TABS{.name = QString("Configuraciones"),
-                 .icon = QIcon(":res/settings.svg"),
-                 .frame = new QFrame()},
+} // namespace Props
 
-        };
-        return tab_info;
-    }
-} // namespace Conf
-
-using namespace Conf;
+using namespace Props;
 
 class MainWindow : public QMainWindow
 {
@@ -57,6 +36,14 @@ class MainWindow : public QMainWindow
   private:
     auto build_window() -> void;
     auto build_tab_bar() -> void;
+    auto set_tab(QFrame *frame) -> void;
+
+    /*
+     * @brief GET TAB PROPERTIES.
+     * @return ARRAY OF TABS PROPERTIES.
+     */
+    [[nodiscard]] auto tab_info() -> std::array<TABS, 6>;
+
     QPointer<QTabWidget> tab_bar;
-    Sale *sale = nullptr;
+    std::unique_ptr<Sale> sale = nullptr;
 };

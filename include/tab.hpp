@@ -1,6 +1,10 @@
 #pragma once
 
 #include <QFrame>
+#include <QLineEdit>
+#include <QPointer>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 /* Tabs class */
 class Tab; // Base Class
@@ -38,6 +42,16 @@ class Sale : protected Tab, public QFrame
     auto set_layout() -> void override;
     auto set_binding() -> void override;
     auto set_button() -> void override;
+
+  private:
+    auto build_search_bar() -> void;
+    auto build_too_bar(QFrame *container) -> void;
+
+    QPointer<QVBoxLayout> header = nullptr;
+    QPointer<QVBoxLayout> center = nullptr;
+    QPointer<QVBoxLayout> footer = nullptr;
+    QPointer<QToolBar> tool_bar = nullptr;
+    QPointer<QLineEdit> search = nullptr;
 };
 
 class Client : protected Tab, public QFrame

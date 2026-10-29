@@ -6,5 +6,6 @@
       <file>res/product.svg</file>
       <file>res/report.svg</file>
       <file>res/settings.svg</file>
+      <file>res/search.svg</file>
     </qresource>
 </RCC>

@@ -1,10 +1,14 @@
 #pragma once
 
 #include <QFrame>
+#include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPointer>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <concepts>
+
+// #include <type_traits>
 
 /* Tabs class */
 class Tab; // Base Class
@@ -14,6 +18,19 @@ class Client;
 class Product;
 class Configuration;
 class Report;
+
+// space for templates with concepts
+namespace Type
+{
+    /* template <typename T>
+     concept Layout = std::same_as<std::remove_pointer_t<T>, QVBoxLayout> ||
+                      std::same_as<std::remove_pointer_t<T>, QHBoxLayout>;
+     */
+
+    template <typename T>
+    concept Layout = std::same_as<T, QVBoxLayout> || std::same_as<T, QHBoxLayout>;
+
+} // namespace Type
 
 class Tab
 {
@@ -45,7 +62,7 @@ class Sale : protected Tab, public QFrame
 
   private:
     auto build_search_bar() -> void;
-    auto build_too_bar(QFrame *container) -> void;
+    auto build_tool_bar(QFrame *parent) -> void;
 
     QPointer<QVBoxLayout> header = nullptr;
     QPointer<QVBoxLayout> center = nullptr;

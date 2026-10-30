@@ -1,4 +1,5 @@
 #include "tab.hpp"
+
 #include <QIcon>
 
 Sale::Sale(QFrame *tab_parent) : QFrame(tab_parent) { build_tab(); }
@@ -18,6 +19,7 @@ auto Sale::build_tab() -> void
     main_layout->addLayout(footer);
 
     set_layout();
+    this->setLayout(main_layout);
 }
 
 auto Sale::set_layout() -> void
@@ -31,17 +33,21 @@ auto Sale::set_layout() -> void
     header_container->setStyleSheet("QFrame { border: 1px solid gray }");
     footer_container->setStyleSheet("QFrame { border: 1px solid gray }");
 
-    build_too_bar(header_container);
+    build_tool_bar(header_container);
     build_search_bar();
 
     header->addWidget(header_container);
     footer->addWidget(footer_container);
 }
 
-auto Sale::build_too_bar(QFrame *container) -> void
+auto Sale::build_tool_bar(QFrame *parent) -> void
 {
-    tool_bar = new QToolBar(container);
-    tool_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); // text and icon
+    if (!parent)
+        return;
+
+    tool_bar = new QToolBar(parent);
+    tool_bar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    tool_bar->setStyleSheet("QToolBar{padding: 10px}");
 }
 
 auto Sale::build_search_bar() -> void
@@ -52,11 +58,8 @@ auto Sale::build_search_bar() -> void
     search = new QLineEdit();
     search->addAction(QIcon(":res/search.svg"), QLineEdit::LeadingPosition);
     search->setPlaceholderText("Buscar...");
-    search->setStyleSheet("QLineEdit { background-color: white; color: black;}");
-
-    search->setMinimumWidth(250);
-    search->setMaximumWidth(400);
-    search->setFixedHeight(30);
+    search->setStyleSheet("QLineEdit { background-color: white; color: black}");
+    search->setFixedSize(400, 30);
 
     tool_bar->addWidget(search);
 }

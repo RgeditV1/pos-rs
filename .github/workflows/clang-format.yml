@@ -1,0 +1,33 @@
+name: "format code"
+
+on:
+  push:
+    branches: ["dev", "window", "main"]
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  formatting-check:
+    name: Formatting Check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path:
+          - exclude: "extern"
+          - exclude: "external"
+          - exclude: "3rdparty"
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run clang-format style check
+        uses: jidicula/clang-format-action@v4.18.0
+        with:
+          fallback-style: "GNU"
+          exclude-regex: ${{ matrix.path['exclude'] }}
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        with:
+          commit_message: apply clang-format changes
+          branch: ${{ github.head_ref }}
